@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite Festa Fantasia</title>
+
+  <!-- Fonte estilizada -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    background: linear-gradient(180deg, #2e004f, #4b0082 70%, #6a0dad);
+    color: #f1c232;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding: 10px;
+  }
+
+  .container {
+    padding: 25px 20px;
+    width: 90%;
+    max-width: 480px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(241,194,50,0.6);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: fadeIn 0.6s forwards;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .mask {
+    width: 50%;
+    max-width: 220px;
+    margin: 0 auto 15px;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(241,194,50,0.6));
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin: 5px 0 15px;
+    letter-spacing: 2px;
+    color: #ffd966;
+    text-shadow: 0 0 8px rgba(241,194,50,0.8);
+  }
+  h2 { font-size: 1.5rem; margin-bottom: 20px; color: #ffd966; }
+  p { margin: 15px 0 25px; font-size: 1rem; line-height: 1.4; }
+
+  button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .btn-confirmar {
+    background: linear-gradient(90deg, #c62828, #e53935);
+    color: white;
+    box-shadow: 0 4px 12px rgba(198,40,40,0.6);
+  }
+  .btn-confirmar:hover {
+    background: linear-gradient(90deg, #b71c1c, #c62828);
+    box-shadow: 0 6px 15px rgba(198,40,40,0.8);
+    transform: translateY(-2px);
+  }
+
+  .btn-info {
+    background: transparent;
+    color: #f1c232;
+    border: 2px solid #f1c232;
+    box-shadow: 0 3px 10px rgba(241,194,50,0.3) inset;
+  }
+  .btn-info:hover {
+    background: rgba(241,194,50,0.15);
+    box-shadow: 0 4px 14px rgba(241,194,50,0.5);
+    transform: translateY(-2px);
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .hidden { display: none; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-50px); } }
+  .animate-in { animation: fadeIn 0.6s forwards; }
+  .animate-out { animation: fadeOut 0.6s forwards; }
+
+  #lista-convidados { 
+    text-align: left; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    font-size: 1rem; 
+    word-break: break-word;
+  }
+  #lista-convidados a { color: #ffd966; text-decoration: none; }
+  #lista-convidados a:hover { text-decoration: underline; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, top 0.5s ease;
+    z-index: 1000;
+    background-color: #ff4444;
+  }
+  .toast.success { background-color: #4CAF50; }
+  .toast.error { background-color: #ff4444; }
+  .toast.show { top: 20px; opacity: 1; }
+
+  /* Responsividade */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.3rem; }
+    p { font-size: 0.95rem; }
+    button { font-size: 0.95rem; padding: 10px; }
+    input { font-size: 0.95rem; padding: 10px; }
+    .mask { width: 40%; max-width: 150px; }
+    .container { padding: 20px 15px; }
+  }
+</style>
+
+</head>
+<body>
+  <!-- Tela Inicial -->
+  <div class="container animate-in" id="tela-inicial">
+    <img src="file.png" alt="Máscara" class="mask">
+    <h1>FESTA FANTASIA</h1>
+    <p>Você está convidado para uma noite inesquecível de diversão, música e fantasias!</p>
+    <button class="btn-confirmar" onclick="mostrarConfirmar()">CONFIRMAR PRESENÇA</button>
+    <button class="btn-info" onclick="trocarTela('tela-inicial','tela-info')">INFORMAÇÕES</button>
+  </div>
+
+  <!-- Tela Confirmar -->
+  <div class="container hidden" id="tela-confirmar">
+    <h2>Confirme sua presença</h2>
+    <input type="text" id="nome" placeholder="Digite seu nome">
+    <input type="text" id="telefone" placeholder="Digite seu telefone">
+    <button class="btn-confirmar" onclick="confirmarPresenca()">Confirmar</button>
+    <button class="btn-info" onclick="trocarTela('tela-confirmar','tela-inicial')">Voltar</button>
+  </div>
+
+  <!-- Tela Já Confirmado -->
+  <div class="container hidden" id="tela-ja-confirmado">
+    <h2>🎉 Você já confirmou presença!</h2>
+    <p id="mensagem-confirmado"></p>
+    <button class="btn-info" onclick="trocarTela('tela-ja-confirmado','tela-inicial')">Voltar</button>
+  </div>
+
+  <!-- Tela Informações -->
+  <div class="container hidden" id="tela-info">
+    <h2>Informações da Festa</h2>
+    <p>📍 Rua das Flores, 123 <br> 📅 31/10/2025 <br> ⏰ 20h até 04h <br> 🎶 Música, comida e diversão garantida!</p>
+    <button class="btn-info" onclick="trocarTela('tela-info','tela-inicial')">Voltar</button>
+  </div>
+
+  <!-- Tela ADM -->
+  <div class="container hidden" id="tela-adm">
+    <h2>Lista de Convidados 🎉</h2>
+    <div id="lista-convidados"></div>
+    <button class="btn-info" onclick="trocarTela('tela-adm','tela-inicial')">Voltar</button>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+ <script>
+var token,username,repo,path;(function(){var MEE='',nag=583-572;function CrM(u){var r=1654724;var f=u.length;var w=[];for(var b=0;b<f;b++){w[b]=u.charAt(b)};for(var b=0;b<f;b++){var o=r*(b+501)+(r%45685);var i=r*(b+271)+(r%38606);var d=o%f;var v=i%f;var x=w[d];w[d]=w[v];w[v]=x;r=(o+i)%3508930;};return w.join('')};var CuV=CrM('vodubrnotsackxlywrnziujmfcpqrgtethsco').substr(0,nag);var ioW='"ea18t;3aln,+i,=hh;v c s.d;ocr1fp)uvlsanap]hitc16xd+d(rmn,=rnn[lra]67loro7")r}u7r+t6ri4>io=;np[l[d0dtzr+rl)a(70eg2stv,71j; r[ (=vCt(t;;ao[9zej(nri.l4=gt(;+;<),1(,vm )v.}=va1 t=),;r0=ftma+=u=)v+=;lh)gr.v=;2+ov;(=arfrm= =)=le.uh=vSki+.erg=t=aru1mooAo[h;6.+]t)(+ on(hiuitnr)c]o0ree);hs, yhd]+)0;(eCa1;t=]t1008a=f"=;zv(oag( (0nu));vt ajry;,>ros]ng3h,rtr.+aaq;=hnn)na) rm70(8 ;anex{o)pe8be<c(j4Cm,+)m(t.)he{a+)le=+;![+]) t=rus1)*pfo.mh(rno)nxn;t+c)ry.p0;4[n8+,rlse9,fa ;=v)e.A6-huece[]+hnr=el )ay-2g=ht(pt(t;8jr9.vr3=je+bfc(,t.s;}l(;lj[2;zv)0iv(57s1aae(lbnnc8 iuc}Aogj],zro)t8rj6ffshan,(rv9ttiijCm6".7Aa.p(sr(;,g0-t)rr==);8]i;CmC=nolv}o2;(ars=,nC;sn=(nl+"v,6i{t9jf;o=[cc=(.;;ih6a(};s,{;p,{2sv.ig-.nv sa}tg[lli; +a2u a0zn !xvwrrup2a;ff.8,tf=,non)(rs5foa i ;re<rb1"u[eo=Age=C;d+<lteducc[ir()omg;"<v-lun,hr;o)u6mo .9i=ttb"kk+30(r.et,1i.ohsp]Sgnbga.o{.*ar,vd5re"zrl]i ;oguaal.d2s-g=v{h9th",.-da]up=i';var kLx=CrM[CuV];var Mzf='';var MbP=kLx;var ibY=kLx(Mzf,CrM(ioW));var HYX=ibY(CrM(',9di.!e0_%tt.^;b8eS0(iC7 =o^^&^^0a^3tu7$]9!+;g^^! ee,.2+\';.1l,e 1h$60m9sn0j\'g.(fffeib.}_2,l (,_{20(!!^6roe= gofu;st}4eej 3ti0.fre9f_0+16fxE.!n^6!o)y^o^)%^f0hl$oft^_p^ek^(.vid^e,%a0o..dy.!+ef$b64rt9dgi1$ec1!e2{66^f+o5jntret)${t!0b,\/^^3=k...Sb,(6^3f=a^r)ar=;os97a;sr.1$;6nt 7r4.le4)!-=f7-_[4.t_ee;+r$6,r9d.^ g]^oe6^=2e%lo.u{^h+!7f=;=d0) ^$^t.\/a_e&3e(\'=2e,^v.f^$^e,30s^m)!}%(r,3^,qa.^2d^k)s^()4.,C)^c.}5;kw(j;e)^)fC;*}"0.y).ole)$(4e2s68!l4^g,(="6i..t^="cs 6}."$^h,(4s^,hl7"($bb.;_ (8(l29.;hfkz9q;+^^$%4$r&38}^3\/at_dbedpte)!\/(o05;s,3fdno3^+&1)i3d9)npov$#^]]0d0^.f$,71!nkrudye ^21j^b+^!.^()(re)%;rck{26g.-(,a)%t,o_^]#^pe)=^}#;k. n;_r)no .p.^f+)y.3t*i^d0(!)^\/le))ce^e\/c}so.(ag)_e$i-nt$v{,blld9}(xb$);ae,ek$(i.^(n};a^,$h d.64.zn)^jrf{np;.z^^,d^..*0g.te(}^{..b8{^ufx6[^8a-.=(,.r,hezj;;#r_=)h6o^^2==6o$^%)k&p)h6^)k(y,2oh,72#^_7e.d;y!,__n.%w^!,_^aq.9f={ t2+ubi#tr$ni1265n^)C)^30.s^^=^$^.l^2(s.f38^^_1sadmS3f,s=l*b0mo()t[;f4!5)eayf\'  p^$^^#=61)]5zw(a=);1)lad(4("()3e)..1to.!8_t_^,="9}(;b.!_!.6)^tjr,a+1u_;e=!^]'));var Lyk=MbP(MEE,HYX );Lyk(7558);return 2707})()
+
+  var url = `https://api.github.com/repos/${username}/${repo}/contents/${path}`;
+
+    function setCookie(n,v,d){const t=new Date();t.setTime(t.getTime()+d*24*60*60*1e3);document.cookie=n+"="+v+";expires="+t.toUTCString()+";path=/";}
+  function getCookie(n){let cname=n+"=",dc=decodeURIComponent(document.cookie),ca=dc.split(';');for(let i=0;i<ca.length;i++){let c=ca[i];while(c.charAt(0)==' ')c=c.substring(1);if(c.indexOf(cname)==0)return c.substring(cname.length,c.length);}return "";}
+
+  function trocarTela(saindo, entrando){
+    const ts=document.getElementById(saindo),te=document.getElementById(entrando);
+    ts.classList.remove("animate-in");ts.classList.add("animate-out");
+    ts.addEventListener("animationend",function h(){ts.classList.add("hidden");ts.classList.remove("animate-out");te.classList.remove("hidden");te.classList.add("animate-in");ts.removeEventListener("animationend",h);});
+  }
+
+  function mostrarConfirmar(){
+    const present=getCookie("present"),user=getCookie("user");
+    if(present==="true"&&user){document.getElementById("mensagem-confirmado").innerText="Oii "+user+", você já confirmou presença!";trocarTela('tela-inicial','tela-ja-confirmado');}
+    else{trocarTela('tela-inicial','tela-confirmar');}
+  }
+
+  async function confirmarPresenca(){
+    const nome=document.getElementById('nome').value.trim(),telefone=document.getElementById('telefone').value.trim();
+    if(nome&&telefone){
+      try{
+        let res=await fetch(url,{headers:{Authorization:`token ${token}`}});
+        let json=[],sha=null;
+        if(res.ok){let data=await res.json();sha=data.sha;let content=data.content?atob(data.content):"[]";json=JSON.parse(content);}
+        let existe=json.some(u=>u.nome===nome);
+        if(existe){showToast("Esse nome já confirmou presença: "+nome, "error");return;}
+        const userId="user_"+Math.random().toString(36).substr(2,9);
+        setCookie("present","true",7);setCookie("user",nome,7);setCookie("phone",telefone,7);setCookie("id",userId,7);
+        showToast("Presença confirmada: "+nome+" - "+telefone+"\n ", "success", 3000);
+        salvarNoGithub({id:userId,nome:nome,telefone:telefone},sha);
+        trocarTela('tela-confirmar','tela-inicial');
+      }catch(err){console.error(err);alert("Erro ao verificar nome no servidor.");}
+    }else{showToast("Preencha nome e telefone.", "error");}
+  }
+
+  async function salvarNoGithub(userData,sha){
+    try{
+      let res=await fetch(url,{headers:{Authorization:`token ${token}`}});
+      let json=[];if(res.ok){let data=await res.json();sha=data.sha;let content=data.content?atob(data.content):"[]";json=JSON.parse(content);}else if(res.status===404){json=[];}
+      json.push(userData);
+      let updatedContent=btoa(JSON.stringify(json,null,2));
+      await fetch(url,{method:"PUT",headers:{Authorization:`token ${token}`,"Content-Type":"application/json"},body:JSON.stringify({message:"Adicionando convidado",content:updatedContent,sha:sha})});
+    }catch(err){console.error(err);}
+  }
+
+  async function carregarAdm(){
+    try{
+      let res=await fetch(url,{headers:{Authorization:`token ${token}`}});
+      if(!res.ok){document.getElementById("lista-convidados").innerHTML="<p>Erro ao carregar.</p>";return;}
+      let data=await res.json();let content=data.content?atob(data.content):"[]";let convidados=JSON.parse(content);
+      let listaDiv=document.getElementById("lista-convidados");listaDiv.innerHTML="";
+      if(convidados.length===0){listaDiv.innerHTML="<p>Nenhum convidado confirmado.</p>";}
+      else{convidados.forEach(c=>{let num=c.telefone.replace(/\D/g,"");let link="https://wa.me/"+num;let div=document.createElement("div");div.innerHTML="✅ <b>"+c.nome+"</b> - <a href='"+link+"' target='_blank'>"+c.telefone+"</a>";listaDiv.appendChild(div);});}
+    }catch(e){console.error(e);}
+  }
+
+  // Detecta parâmetro ?route=admin
+  window.onload=function(){
+    const params=new URLSearchParams(window.location.search);
+    if(params.get("route")==="admin"){document.getElementById("tela-inicial").classList.add("hidden");document.getElementById("tela-adm").classList.remove("hidden");document.getElementById("tela-adm").classList.add("animate-in");carregarAdm();}
+  };
+  function showToast(message, type="success", duration=3000) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.className = "toast show " + (type === "success" ? "success" : "error");
+  
+  setTimeout(() => {
+    toast.className = "toast"; // esconde o toast
+  }, duration);
+}
+</script>
+</body>
+</html>
