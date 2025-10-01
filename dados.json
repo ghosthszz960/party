@@ -17,5 +17,13 @@
     "nome": "GUSTAVO",
     "telefone": "11966465107",
     "acompanhantes": []
+  },
+  {
+    "id": "user_vvoyh58c9",
+    "nome": "GUSTAVO AMARAL",
+    "telefone": "11966465107",
+    "acompanhantes": [
+      "OI"
+    ]
   }
 ]
