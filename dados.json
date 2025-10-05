@@ -1,7 +1,7 @@
 [
   {
     "id": "user_ce34qqefr",
-    "nome": "VitÃ³ria maria",
+    "nome": "VitÃƒÂ³ria maria",
     "telefone": "11952863917",
     "acompanhantes": []
   },
@@ -30,7 +30,7 @@
     "nome": "Wallacy Brennan Almeida Dos Santos",
     "telefone": "11 96123 1809",
     "acompanhantes": [
-      "Meu irmão"
+      "Meu irmÃ£o"
     ]
   },
   {
@@ -44,7 +44,13 @@
     "nome": "Bryan Kayque Almeida Siqueira",
     "telefone": "11 957130563",
     "acompanhantes": [
-      "Cau�"
+      "Cauã"
     ]
+  },
+  {
+    "id": "user_mgxe1wics",
+    "nome": "Raissa",
+    "telefone": "11970689942",
+    "acompanhantes": []
   }
 ]
