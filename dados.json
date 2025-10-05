@@ -1,7 +1,7 @@
 [
   {
     "id": "user_ce34qqefr",
-    "nome": "Vitória maria",
+    "nome": "VitÃ³ria maria",
     "telefone": "11952863917",
     "acompanhantes": []
   },
@@ -30,7 +30,13 @@
     "nome": "Wallacy Brennan Almeida Dos Santos",
     "telefone": "11 96123 1809",
     "acompanhantes": [
-      "Meu irm�o"
+      "Meu irmão"
     ]
+  },
+  {
+    "id": "user_qclmppqjr",
+    "nome": "isadora ribeiro",
+    "telefone": "11914390979",
+    "acompanhantes": []
   }
 ]
