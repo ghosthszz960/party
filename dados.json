@@ -16,5 +16,13 @@
     "nome": "Vitoria",
     "telefone": "11952863917",
     "acompanhantes": []
+  },
+  {
+    "id": "user_ap0669v15",
+    "nome": "Rihanna Laura Almeida de Souza",
+    "telefone": "961231838",
+    "acompanhantes": [
+      "Alice"
+    ]
   }
 ]
