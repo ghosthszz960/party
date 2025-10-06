@@ -326,21 +326,40 @@ async function carregarAdm() {
     console.error(e);
   }
 }
+    /* ========================================================
+       FUNCAO PARA LIMPAR COOKIES
+    ======================================================== */
+function limparCookies() {
+  const cookies = document.cookie.split(";");
+
+  for (let cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  }
+}
+
 
 
     /* ========================================================
        ROTA ADMINISTRADOR VIA QUERY PARAM
     ======================================================== */
-    window.onload = function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("route") === "admin") {
-        document.getElementById("tela-inicial").classList.add("hidden");
-        document.getElementById("tela-adm").classList.remove("hidden");
-        document.getElementById("tela-adm").classList.add("animate-in");
-        carregarAdm();
-      }
-    };
+ window.onload = function () {
+  const params = new URLSearchParams(window.location.search);
 
+  if (params.get("route") === "admin") {
+    document.getElementById("tela-inicial").classList.add("hidden");
+    document.getElementById("tela-adm").classList.remove("hidden");
+    document.getElementById("tela-adm").classList.add("animate-in");
+    carregarAdm();
+  }
+
+  if (params.get("route") === "clean") {
+    limparCookies();
+    alert("LIMPLE DEFINITIONS");
+    location.href = window.location.pathname;
+  }
+};
     /* ========================================================
        TOAST
     ======================================================== */
